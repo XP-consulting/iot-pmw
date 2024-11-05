@@ -1,4 +1,23 @@
 services:
   app:
     build: .
-
+    networks:
+     - internal
+     - external
+  ext-client:
+    image: archlinux
+    command: tail -f /dev/null
+    networks:
+      - external
+  int-client:
+    image: archlinux
+    command: tail -f /dev/null
+    networks:
+      - internal
+networks:
+  internal:
+    name: internal
+    driver: bridge
+  external:
+    name: external
+    driver: bridge
