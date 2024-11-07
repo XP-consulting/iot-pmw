@@ -1,23 +1,23 @@
 # IoT-PMW: Secure IoT Passthrough Middleware
 
-This project aims to create an IoT Passthrough Middleware (IoT-PMW) that enables secure data transmission through a completely isolated firewall system. By "complete block system," we mean a firewall that fully restricts all network connections, blocking both inbound and outbound traffic. This middleware is designed to operate on a single server, divided into two separate Docker containers. One container is connected to the external network, while the other connects to the internal network, allowing secure, controlled data exchange with specific JSON protocols across the firewall.
+This project aims to create an IoT Passthrough Middleware (IoT-PMW) that enables secure data transmission through a completely isolated firewall system. By "complete block system," we mean a firewall that fully restricts all network connections, blocking both inbound and outbound traffic. This middleware is designed to operate on a single server. One part is connected to the external network, while the other connects to the internal network, allowing secure, controlled data exchange with specific JSON protocols across the firewall.
 
 ## Why IoT-PMW?
 
-The firewall’s role is to protect the network from external threats by blocking all unauthorized connections. So why introduce a middleware solution? The goal is to enable the safe and selective passage of critical data, specifically JSON protocols, between network segments. Using this system, we can monitor and control network data flows, in our case leveraging Go’s SigML package to track and securely transmit sensor data across network boundaries. This approach ensures secure data handling within a firewall-protected environment.
+The firewall’s role is to protect the network from external threats by blocking all unauthorized connections. So why introduce a middleware solution? The goal is to enable the safe and selective passage of critical data, specifically the SigML, between network segments. Using this system, we can monitor and control network data flows, in our case leveraging Go’s SigML package to track and securely transmit sensor data across network boundaries. This approach ensures secure data handling within a firewall-protected environment.
 
 ## Technologies Used
 
-The project primarily utilizes the Go programming language and the SigML package to manage errors and streamline JSON protocol handling. Key tools and methods include:
+The project primarily utilizes the Go programming language and the SigML package to manage errors and streamline SigML handling. Key tools and methods include:
 
-- **Docker Containers**: Two Docker containers separate trusted and untrusted networks, ensuring secure data flow between global and local networks. Each container maintains a secure connection to prevent man-in-the-middle or other security attacks.
+- **Docker Containers**: Docker will aid in the development of the solution, even if it can be run native. It will help isolate the datastream across the firewall. Docker containers also provide resilience and avalibility. 
   
 - **Encryption**: To further enhance security, encryption is implemented for communication between containers. This encrypted connection aims to prevent unauthorized access to sensitive data.
   
 - **Database Integration**: The middleware is designed to be compatible with various databases, but PostgreSQL is our chosen solution for this project.
 
 ## Program Layout
-The main concern for this software will be security. This is part of the reason why it is open source. More eyes on the code will always increase security. The most vulnerable part of the software will be the database. The hard part is parsing the data being passed to the database. Therefore we will carefully parse the data outside of the firewall and keep the database inside the firewall. The internal program will establish an API for the external part of the software. The external part of the software will parse the sigML data to make sure the format is correct. 
+The main concern for this software will be security. This is part of the reason why it is open source. More eyes on the code will always increase security. The most vulnerable part of the software will be the database. The hard part is parsing the data being passed to the database. Therefore we will carefully parse the data outside of the firewall and keep the database inside the firewall. The internal program will establish an API for the external part of the software. The external part of the software will parse the SigML data to make sure the format is correct. 
 
 ![Diagram of the solution describing firewall, internal and external software, clients and sensors](layout.png)
 
